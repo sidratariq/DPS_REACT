@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import CustomerList from './CustomerList';
+import Filters from './Filters';
 import { debounce } from './debounce';
-
 
 const CustomerManagement: React.FC = () => {
     const [customers, setCustomers] = useState<any[]>([]);
@@ -9,7 +9,7 @@ const CustomerManagement: React.FC = () => {
     const [nameFilter, setNameFilter] = useState('');
     const [cityFilter, setCityFilter] = useState('');
     const [highlightOldest, setHighlightOldest] = useState(false);
-    
+
     useEffect(() => {
         fetch('https://dummyjson.com/users')
             .then(response => response.json())
@@ -59,7 +59,15 @@ const CustomerManagement: React.FC = () => {
 
     return (
         <div className="customer-management">
-           
+            <Filters
+                nameFilter={nameFilter}
+                setNameFilter={setNameFilter}
+                cityFilter={cityFilter}
+                setCityFilter={setCityFilter}
+                highlightOldest={highlightOldest}
+                setHighlightOldest={setHighlightOldest}
+                customers={customers}
+            />
             <CustomerList customers={filteredCustomers} />
         </div>
     );
